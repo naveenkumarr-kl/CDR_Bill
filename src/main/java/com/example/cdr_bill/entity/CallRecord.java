@@ -1,8 +1,9 @@
 package com.example.cdr_bill.entity;
 
 
+import com.example.cdr_bill.config.LocalDateTimeConverter;
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvDate;
+import com.opencsv.bean.CsvCustomBindByName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,14 +33,13 @@ public class CallRecord {
     @Column(name = "receiver_number")
     private String receiverNumber;
 
-    @CsvBindByName(column = "call_start_time")
-    @CsvDate("yyyy-MM-dd HH:mm:ss")
+    @CsvCustomBindByName(column = "call_start_time",converter = LocalDateTimeConverter.class)
     @Column(name = "call_start_time")
     private LocalDateTime callStartTime;
 
-    @CsvBindByName(column = "call_duration")
-    @Column(name = "call_duration")
-    private Integer callDuration;
+    @CsvCustomBindByName(column = "call_end_time",converter = LocalDateTimeConverter.class)
+    @Column(name = "call_end_time")
+    private LocalDateTime callEndTime;
 
     @CsvBindByName(column = "call_type")
     @Column(name = "call_type")
@@ -49,6 +49,7 @@ public class CallRecord {
     @Column(name = "cell_tower_id")
     private String cellTowerId;
 
-    @Column(name = "call_cost")
-    private Double callCost;
+    @Column(name="bill_amount")
+    private Double billAmount;
+
 }

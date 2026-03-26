@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/cdr/v1")
 public class CdrController {
@@ -22,8 +24,8 @@ public class CdrController {
         try {
             String result = csvService.calculateBill(file);
             return ResponseEntity.ok(result);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+        }catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
